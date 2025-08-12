@@ -1,0 +1,22 @@
+{
+    "name": "rshop/omnipay-adyen",
+    "description": "Adyen Omnipay package",
+    "license": "MIT",
+    "require": {
+        "adyen/php-api-library": "^28.1",
+        "omnipay/common": "^2.5"
+    },
+    "require-dev": {
+        "rshop/php-cs-fixer-config": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Omnipay\\Adyen\\": "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    }
+}
