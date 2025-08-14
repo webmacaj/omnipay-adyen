@@ -67,6 +67,25 @@ class PurchaseRequest extends AbstractRequest
         return $this->getParameter('locale');
     }
 
+    public function setShippingCountryCode($value)
+    {
+        return $this->setParameter('shippingCountryCode', $value);
+    }
+
+    public function getShippingCountryCode()
+    {
+        return $this->getParameter('shippingCountryCode');
+    }
+
+    public function setBillingCountryCode($value)
+    {
+        return $this->setParameter('billingCountryCode', $value);
+    }
+    public function getBillingCountryCode()
+    {
+        return $this->getParameter('billingCountryCode');
+    }
+
     public function sendData($data)
     {
         $client = new Client();
@@ -78,23 +97,25 @@ class PurchaseRequest extends AbstractRequest
 
         $amount = new Amount();
         $amount->setCurrency($this->getCurrency())
-            ->setValue($this->getAmount());
+            ->setValue((int) \round($this->getAmount() * 100));
 
         $billingAddress = new Address();
         $billingAddress->setStreet($this->getCard()->getBillingAddress1())
             ->setCity($this->getCard()->getBillingCity())
-            ->setCountry($this->getCard()->getBillingCountry())
-            ->setPostalCode($this->getCard()->getBillingPostcode());
+            ->setCountry($this->getBillingCountryCode())
+            ->setPostalCode($this->getCard()->getBillingPostcode())
+            ->setHouseNumberOrName(\preg_replace('/\D/', '', \trim($this->getCard()->getBillingAddress1())));
 
         $shippingAddress = new Address();
         $shippingAddress->setStreet($this->getCard()->getShippingAddress1())
             ->setCity($this->getCard()->getShippingCity())
-            ->setCountry($this->getCard()->getShippingCountry())
-            ->setPostalCode($this->getCard()->getShippingPostcode());
+            ->setCountry($this->getShippingCountryCode())
+            ->setPostalCode($this->getCard()->getShippingPostcode())
+            ->setHouseNumberOrName(\preg_replace('/\D/', '', \trim($this->getCard()->getShippingAddress1())));
 
         $paymentLinkRequest = new PaymentLinkRequest();
         $paymentLinkRequest->setMerchantAccount($this->getMerchantAccount())
-            ->setReference($this->getTransactionReference())
+            ->setMerchantOrderReference($this->getTransactionReference())
             ->setAmount($amount)
             ->setCountryCode($this->getCountryCode())
             ->setShopperReference(\md5($this->getCard()->getEmail()))
