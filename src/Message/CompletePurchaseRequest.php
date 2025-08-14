@@ -16,7 +16,7 @@ class CompletePurchaseRequest extends PurchaseRequest
         $client->setTimeout(10);
 
         $service = new PaymentLinksApi($client);
-        $paymentDetails = $service->getPaymentLink($this->getTransactionId());
+        $paymentDetails = $service->getPaymentLink($data['additionalData_paymentLinkId']);
 
         return new CompletePurchaseResponse($this, $paymentDetails->toArray());
     }
