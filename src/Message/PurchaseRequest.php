@@ -101,7 +101,8 @@ class PurchaseRequest extends AbstractRequest
             ->setShopperEmail($this->getCard()->getEmail())
             ->setShopperLocale($this->getLocale())
             ->setBillingAddress($billingAddress)
-            ->setDeliveryAddress($shippingAddress);
+            ->setDeliveryAddress($shippingAddress)
+            ->setReturnUrl($this->getReturnUrl());
 
         $result = $service->paymentLinks($paymentLinkRequest);
 
