@@ -67,4 +67,37 @@ class Gateway extends AbstractGateway
     {
         return $this->getParameter('locale');
     }
+
+    /**
+     * Create a purchase request
+     *
+     * @param array $parameters
+     * @return \Omnipay\Adyen\Message\PurchaseRequest
+     */
+    public function purchase(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\Adyen\Message\PurchaseRequest', $parameters);
+    }
+
+    /**
+     * Create a complete purchase request
+     *
+     * @param array $parameters
+     * @return \Omnipay\Adyen\Message\CompletePurchaseRequest
+     */
+    public function completePurchase(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\Adyen\Message\CompletePurchaseRequest', $parameters);
+    }
+
+    /**
+     * Create a check status request
+     *
+     * @param array $parameters
+     * @return \Omnipay\Adyen\Message\CompletePurchaseRequest
+     */
+    public function checkStatus(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\Adyen\Message\CheckStatusRequest', $parameters);
+    }
 }
